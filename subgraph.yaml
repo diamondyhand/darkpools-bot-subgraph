@@ -27,4 +27,30 @@ dataSources:
           handler: handleBeaconUpgraded
         - event: Upgraded(indexed address)
           handler: handleUpgraded
+      callHandlers:
+        - function: arbFromETH(address,address[],address,address[],uint)
+          handler: handleSaveTransaction
+        - function: arbFromTokensWithUniV2(uint, address,address[],address,address[],uint)
+          handler: handleSaveTransaction
+        - function: arbFromETHWithVault(address, tuple[], address, tuple[], address[], address[], int256[], uint256)
+          handler: handleSaveTransaction
+        - function: arbFromETHWithVaultAndUniV2(address, tuple[], address, tuple[], address[], address[], int256[], uint256)
+          handler: handleSaveTransaction
+        - function: arbFromTokensWithVaultAndUniV2(uint256, address, address[], address, tuple[], address[], uint256, uint256)
+          handler: handleSaveTransaction
+        - function: arbFromETHWithUniV3(address, tuple[], address, tuple[], uint)
+          handler: handleSaveTransaction
+        - function: arbFromETHWithUniV3AndUniV2(address, address[], address, tuple[], uint256, uint256)
+          handler: handleSaveTransaction
+        - function: arbFromETHWithUniV3AndVault(address, tuple[], address, tuple[], address[], int256[], uint256, uint256)
+          handler: handleSaveTransaction
+        - function: arbFromETHWith1Inch(address, tuple[], address, tuple[], address, tuple[])
+          handler: handleSaveTransaction
+        - function: arbFromETHWith1InchAndUniV2(address, tuple[], address, address[], uint256, uint256)
+          handler: handleSaveTransaction
+        - function: arbFromETHWith1InchAndUniV3(address, tuple[], address, tuple[], uint256, uint256)
+          handler: handleSaveTransaction
+        - function: arbFromETHWith1InchAndVault(address, tuple[], address, bytes, address, tuple[], address[], uint256, uint256)
+          handler: handleSaveTransaction
+
       file: ./src/subgraph.ts
