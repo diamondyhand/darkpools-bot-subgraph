@@ -19,7 +19,7 @@ dataSources:
         - Upgraded
       abis:
         - name: subgraph
-          file: subgraph/abis/subgraph.json
+          file: subgraph\abis\subgraph.json
       eventHandlers:
         - event: AdminChanged(address,address)
           handler: handleAdminChanged
@@ -27,4 +27,4 @@ dataSources:
           handler: handleBeaconUpgraded
         - event: Upgraded(indexed address)
           handler: handleUpgraded
-      file: subgraph/subgraph.wasm
+      file: subgraph\subgraph.wasm
