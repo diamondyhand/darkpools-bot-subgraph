@@ -52,5 +52,4 @@ dataSources:
           handler: handleSaveTransaction
         - function: arbFromETHWith1InchAndVault(address, tuple[], address, bytes, address, tuple[], address[], uint256, uint256)
           handler: handleSaveTransaction
-
       file: ./src/subgraph.ts

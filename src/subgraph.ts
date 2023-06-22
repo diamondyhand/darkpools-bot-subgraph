@@ -45,10 +45,9 @@ export function handleUpgraded(event: UpgradedEvent): void {
   entity.save();
 }
 
-export function handleCreateGravatar(call: CreateGravatarCall): void {
+export function handleSaveTransaction(call: any): void {
   let id = call.transaction.hash;
   // let transaction = new Transaction(id);
   // transaction.displayName = call.inputs._displayName;
-  // transaction.imageUrl = call.inputs._imageUrl;
   // transaction.save();
 }
