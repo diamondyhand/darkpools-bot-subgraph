@@ -1,4 +1,7 @@
-import { Transfer as TransferEvent } from "../generated/weth-erc20/erc20";
+import {
+  Transfer as TransferEvent,
+  TransferCall,
+} from "../generated/weth-erc20/erc20";
 import { Transaction, Transfer } from "../generated/schema";
 
 export function handleTransfer(event: TransferEvent): void {
@@ -12,3 +15,12 @@ export function handleTransfer(event: TransferEvent): void {
   transfer.transactionHash = event.transaction.hash;
   transfer.save();
 }
+
+// export function handleCallTransfer(call: TransferCall): void {
+//   let id = call.transaction.hash;
+//   const tx = Transaction.load(id);
+//   if (tx != null) return;
+//   let transaction = new Transaction(id);
+//   transaction.transactionHash = id;
+//   transaction.save();
+// }

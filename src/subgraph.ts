@@ -19,6 +19,7 @@ import {
   Transaction,
   Upgraded,
 } from "../generated/schema";
+import { TransferCall } from "../generated/arb-erc20/erc20";
 
 export function handleAdminChanged(event: AdminChangedEvent): void {
   let entity = new AdminChanged(
@@ -136,6 +137,13 @@ export function handleUpgraded(event: UpgradedEvent): void {
 // export function handleSaveTransaction9(
 //   call: ArbFromETHWithVaultAndUniV2Call
 // ): void {
+//   let id = call.transaction.hash;
+//   let transaction = new Transaction(id);
+//   transaction.transactionHash = id;
+//   transaction.save();
+// }
+
+// export function handleTransferCall(call: TransferCall): void {
 //   let id = call.transaction.hash;
 //   let transaction = new Transaction(id);
 //   transaction.transactionHash = id;
