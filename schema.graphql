@@ -33,8 +33,6 @@ type Transfer @entity(immutable: true) {
 }
 
 type Transaction @entity(immutable: true) {
-  id: ID!
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
+  id: Bytes!
   transactionHash: Bytes!
 }

@@ -22,3 +22,17 @@ type Upgraded @entity(immutable: true) {
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
+
+type Transfer @entity(immutable: true) {
+  id: ID!
+  implementation: String! # address
+  value: BigInt!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Transaction @entity(immutable: true) {
+  id: Bytes!
+  transactionHash: Bytes!
+}

@@ -1,10 +1,5 @@
-import { Transfer as TransferEvent } from "../generated/erc20/erc20";
-import {
-  AdminChanged,
-  BeaconUpgraded,
-  Upgraded,
-  Transfer,
-} from "../generated/schema";
+import { Transfer as TransferEvent } from "../generated/eth-erc20/erc20";
+import { Transaction, Transfer } from "../generated/schema";
 
 export function handleTransfer(event: TransferEvent): void {
   let transfer = new Transfer(
