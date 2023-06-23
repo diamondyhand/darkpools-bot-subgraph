@@ -3,7 +3,12 @@ import {
   BeaconUpgraded as BeaconUpgradedEvent,
   Upgraded as UpgradedEvent,
 } from "../generated/subgraph/subgraph";
-import { AdminChanged, BeaconUpgraded, Upgraded } from "../generated/schema";
+import {
+  AdminChanged,
+  BeaconUpgraded,
+  Transaction,
+  Upgraded,
+} from "../generated/schema";
 
 export function handleAdminChanged(event: AdminChangedEvent): void {
   let entity = new AdminChanged(
@@ -47,7 +52,9 @@ export function handleUpgraded(event: UpgradedEvent): void {
 
 export function handleSaveTransaction(call: any): void {
   let id = call.transaction.hash;
-  // let transaction = new Transaction(id);
-  // transaction.displayName = call.inputs._displayName;
-  // transaction.save();
+  let transaction = new Transaction(id);
+  transaction.blockNumber = call.params.blockNumber;
+  transaction.blockTimestamp = call.params.blockTimestamp;
+  transaction.transactionHash = call.transaction.hash;
+  transaction.save();
 }

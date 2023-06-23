@@ -68,6 +68,82 @@ export class Upgraded__Params {
   }
 }
 
+export class Initialized extends ethereum.Event {
+  get params(): Initialized__Params {
+    return new Initialized__Params(this);
+  }
+}
+
+export class Initialized__Params {
+  _event: Initialized;
+
+  constructor(event: Initialized) {
+    this._event = event;
+  }
+
+  get version(): i32 {
+    return this._event.parameters[0].value.toI32();
+  }
+}
+
+export class OwnershipTransferred extends ethereum.Event {
+  get params(): OwnershipTransferred__Params {
+    return new OwnershipTransferred__Params(this);
+  }
+}
+
+export class OwnershipTransferred__Params {
+  _event: OwnershipTransferred;
+
+  constructor(event: OwnershipTransferred) {
+    this._event = event;
+  }
+
+  get previousOwner(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get newOwner(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+}
+
+export class Paused extends ethereum.Event {
+  get params(): Paused__Params {
+    return new Paused__Params(this);
+  }
+}
+
+export class Paused__Params {
+  _event: Paused;
+
+  constructor(event: Paused) {
+    this._event = event;
+  }
+
+  get account(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+}
+
+export class Unpaused extends ethereum.Event {
+  get params(): Unpaused__Params {
+    return new Unpaused__Params(this);
+  }
+}
+
+export class Unpaused__Params {
+  _event: Unpaused;
+
+  constructor(event: Unpaused) {
+    this._event = event;
+  }
+
+  get account(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+}
+
 export class subgraph extends ethereum.SmartContract {
   static bind(address: Address): subgraph {
     return new subgraph("subgraph", address);
@@ -99,6 +175,366 @@ export class subgraph extends ethereum.SmartContract {
       "implementation",
       "implementation():(address)",
       []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  ZERO_BYTES(): Bytes {
+    let result = super.call("ZERO_BYTES", "ZERO_BYTES():(bytes)", []);
+
+    return result[0].toBytes();
+  }
+
+  try_ZERO_BYTES(): ethereum.CallResult<Bytes> {
+    let result = super.tryCall("ZERO_BYTES", "ZERO_BYTES():(bytes)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBytes());
+  }
+
+  default1InchStrategy(): Address {
+    let result = super.call(
+      "default1InchStrategy",
+      "default1InchStrategy():(address)",
+      []
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_default1InchStrategy(): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "default1InchStrategy",
+      "default1InchStrategy():(address)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  defaultUniV2Strategy(): Address {
+    let result = super.call(
+      "defaultUniV2Strategy",
+      "defaultUniV2Strategy():(address)",
+      []
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_defaultUniV2Strategy(): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "defaultUniV2Strategy",
+      "defaultUniV2Strategy():(address)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  defaultUniV3Strategy(): Address {
+    let result = super.call(
+      "defaultUniV3Strategy",
+      "defaultUniV3Strategy():(address)",
+      []
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_defaultUniV3Strategy(): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "defaultUniV3Strategy",
+      "defaultUniV3Strategy():(address)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  defaultVaultStrategy(): Address {
+    let result = super.call(
+      "defaultVaultStrategy",
+      "defaultVaultStrategy():(address)",
+      []
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_defaultVaultStrategy(): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "defaultVaultStrategy",
+      "defaultVaultStrategy():(address)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  get1InchStrategy(oneInch: Address): Address {
+    let result = super.call(
+      "get1InchStrategy",
+      "get1InchStrategy(address):(address)",
+      [ethereum.Value.fromAddress(oneInch)]
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_get1InchStrategy(oneInch: Address): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "get1InchStrategy",
+      "get1InchStrategy(address):(address)",
+      [ethereum.Value.fromAddress(oneInch)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  getAmountsOut(
+    router: Address,
+    amountIn: BigInt,
+    path: Array<Address>
+  ): Array<BigInt> {
+    let result = super.call(
+      "getAmountsOut",
+      "getAmountsOut(address,uint256,address[]):(uint256[])",
+      [
+        ethereum.Value.fromAddress(router),
+        ethereum.Value.fromUnsignedBigInt(amountIn),
+        ethereum.Value.fromAddressArray(path)
+      ]
+    );
+
+    return result[0].toBigIntArray();
+  }
+
+  try_getAmountsOut(
+    router: Address,
+    amountIn: BigInt,
+    path: Array<Address>
+  ): ethereum.CallResult<Array<BigInt>> {
+    let result = super.tryCall(
+      "getAmountsOut",
+      "getAmountsOut(address,uint256,address[]):(uint256[])",
+      [
+        ethereum.Value.fromAddress(router),
+        ethereum.Value.fromUnsignedBigInt(amountIn),
+        ethereum.Value.fromAddressArray(path)
+      ]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigIntArray());
+  }
+
+  getUniV2Strategy(uniV2: Address): Address {
+    let result = super.call(
+      "getUniV2Strategy",
+      "getUniV2Strategy(address):(address)",
+      [ethereum.Value.fromAddress(uniV2)]
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_getUniV2Strategy(uniV2: Address): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "getUniV2Strategy",
+      "getUniV2Strategy(address):(address)",
+      [ethereum.Value.fromAddress(uniV2)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  getUniV3Strategy(uniV3: Address): Address {
+    let result = super.call(
+      "getUniV3Strategy",
+      "getUniV3Strategy(address):(address)",
+      [ethereum.Value.fromAddress(uniV3)]
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_getUniV3Strategy(uniV3: Address): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "getUniV3Strategy",
+      "getUniV3Strategy(address):(address)",
+      [ethereum.Value.fromAddress(uniV3)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  getVaultStrategy(vault: Address): Address {
+    let result = super.call(
+      "getVaultStrategy",
+      "getVaultStrategy(address):(address)",
+      [ethereum.Value.fromAddress(vault)]
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_getVaultStrategy(vault: Address): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "getVaultStrategy",
+      "getVaultStrategy(address):(address)",
+      [ethereum.Value.fromAddress(vault)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  oneInchStrategies(param0: Address): Address {
+    let result = super.call(
+      "oneInchStrategies",
+      "oneInchStrategies(address):(address)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_oneInchStrategies(param0: Address): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "oneInchStrategies",
+      "oneInchStrategies(address):(address)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  owner(): Address {
+    let result = super.call("owner", "owner():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_owner(): ethereum.CallResult<Address> {
+    let result = super.tryCall("owner", "owner():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  paused(): boolean {
+    let result = super.call("paused", "paused():(bool)", []);
+
+    return result[0].toBoolean();
+  }
+
+  try_paused(): ethereum.CallResult<boolean> {
+    let result = super.tryCall("paused", "paused():(bool)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
+  }
+
+  uniV2Strategies(param0: Address): Address {
+    let result = super.call(
+      "uniV2Strategies",
+      "uniV2Strategies(address):(address)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_uniV2Strategies(param0: Address): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "uniV2Strategies",
+      "uniV2Strategies(address):(address)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  uniV3Strategies(param0: Address): Address {
+    let result = super.call(
+      "uniV3Strategies",
+      "uniV3Strategies(address):(address)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_uniV3Strategies(param0: Address): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "uniV3Strategies",
+      "uniV3Strategies(address):(address)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  vaultStrategies(param0: Address): Address {
+    let result = super.call(
+      "vaultStrategies",
+      "vaultStrategies(address):(address)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_vaultStrategies(param0: Address): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "vaultStrategies",
+      "vaultStrategies(address):(address)",
+      [ethereum.Value.fromAddress(param0)]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -322,6 +758,1530 @@ export class UpgradeToAndCallCall__Outputs {
   _call: UpgradeToAndCallCall;
 
   constructor(call: UpgradeToAndCallCall) {
+    this._call = call;
+  }
+}
+
+export class ArbFromETHCall extends ethereum.Call {
+  get inputs(): ArbFromETHCall__Inputs {
+    return new ArbFromETHCall__Inputs(this);
+  }
+
+  get outputs(): ArbFromETHCall__Outputs {
+    return new ArbFromETHCall__Outputs(this);
+  }
+}
+
+export class ArbFromETHCall__Inputs {
+  _call: ArbFromETHCall;
+
+  constructor(call: ArbFromETHCall) {
+    this._call = call;
+  }
+
+  get uniV2Buy(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get pathBuy(): Array<Address> {
+    return this._call.inputValues[1].value.toAddressArray();
+  }
+
+  get uniV2Sell(): Address {
+    return this._call.inputValues[2].value.toAddress();
+  }
+
+  get pathSell(): Array<Address> {
+    return this._call.inputValues[3].value.toAddressArray();
+  }
+
+  get deadline(): BigInt {
+    return this._call.inputValues[4].value.toBigInt();
+  }
+}
+
+export class ArbFromETHCall__Outputs {
+  _call: ArbFromETHCall;
+
+  constructor(call: ArbFromETHCall) {
+    this._call = call;
+  }
+
+  get actualAmountOut(): BigInt {
+    return this._call.outputValues[0].value.toBigInt();
+  }
+}
+
+export class ArbFromETHWith1InchCall extends ethereum.Call {
+  get inputs(): ArbFromETHWith1InchCall__Inputs {
+    return new ArbFromETHWith1InchCall__Inputs(this);
+  }
+
+  get outputs(): ArbFromETHWith1InchCall__Outputs {
+    return new ArbFromETHWith1InchCall__Outputs(this);
+  }
+}
+
+export class ArbFromETHWith1InchCall__Inputs {
+  _call: ArbFromETHWith1InchCall;
+
+  constructor(call: ArbFromETHWith1InchCall) {
+    this._call = call;
+  }
+
+  get oneInchBuy(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get executorBuy(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get descBuy(): ArbFromETHWith1InchCallDescBuyStruct {
+    return changetype<ArbFromETHWith1InchCallDescBuyStruct>(
+      this._call.inputValues[2].value.toTuple()
+    );
+  }
+
+  get oneInchSell(): Address {
+    return this._call.inputValues[3].value.toAddress();
+  }
+
+  get executorSell(): Address {
+    return this._call.inputValues[4].value.toAddress();
+  }
+
+  get descSell(): ArbFromETHWith1InchCallDescSellStruct {
+    return changetype<ArbFromETHWith1InchCallDescSellStruct>(
+      this._call.inputValues[5].value.toTuple()
+    );
+  }
+}
+
+export class ArbFromETHWith1InchCall__Outputs {
+  _call: ArbFromETHWith1InchCall;
+
+  constructor(call: ArbFromETHWith1InchCall) {
+    this._call = call;
+  }
+
+  get actualAmountOut(): BigInt {
+    return this._call.outputValues[0].value.toBigInt();
+  }
+}
+
+export class ArbFromETHWith1InchCallDescBuyStruct extends ethereum.Tuple {
+  get srcToken(): Address {
+    return this[0].toAddress();
+  }
+
+  get dstToken(): Address {
+    return this[1].toAddress();
+  }
+
+  get srcReceiver(): Address {
+    return this[2].toAddress();
+  }
+
+  get dstReceiver(): Address {
+    return this[3].toAddress();
+  }
+
+  get amount(): BigInt {
+    return this[4].toBigInt();
+  }
+
+  get minReturnAmount(): BigInt {
+    return this[5].toBigInt();
+  }
+
+  get flags(): BigInt {
+    return this[6].toBigInt();
+  }
+}
+
+export class ArbFromETHWith1InchCallDescSellStruct extends ethereum.Tuple {
+  get srcToken(): Address {
+    return this[0].toAddress();
+  }
+
+  get dstToken(): Address {
+    return this[1].toAddress();
+  }
+
+  get srcReceiver(): Address {
+    return this[2].toAddress();
+  }
+
+  get dstReceiver(): Address {
+    return this[3].toAddress();
+  }
+
+  get amount(): BigInt {
+    return this[4].toBigInt();
+  }
+
+  get minReturnAmount(): BigInt {
+    return this[5].toBigInt();
+  }
+
+  get flags(): BigInt {
+    return this[6].toBigInt();
+  }
+}
+
+export class ArbFromETHWith1InchAndUniV2Call extends ethereum.Call {
+  get inputs(): ArbFromETHWith1InchAndUniV2Call__Inputs {
+    return new ArbFromETHWith1InchAndUniV2Call__Inputs(this);
+  }
+
+  get outputs(): ArbFromETHWith1InchAndUniV2Call__Outputs {
+    return new ArbFromETHWith1InchAndUniV2Call__Outputs(this);
+  }
+}
+
+export class ArbFromETHWith1InchAndUniV2Call__Inputs {
+  _call: ArbFromETHWith1InchAndUniV2Call;
+
+  constructor(call: ArbFromETHWith1InchAndUniV2Call) {
+    this._call = call;
+  }
+
+  get oneInch(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get executor(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get desc(): ArbFromETHWith1InchAndUniV2CallDescStruct {
+    return changetype<ArbFromETHWith1InchAndUniV2CallDescStruct>(
+      this._call.inputValues[2].value.toTuple()
+    );
+  }
+
+  get uniV2(): Address {
+    return this._call.inputValues[3].value.toAddress();
+  }
+
+  get path(): Array<Address> {
+    return this._call.inputValues[4].value.toAddressArray();
+  }
+
+  get deadline(): BigInt {
+    return this._call.inputValues[5].value.toBigInt();
+  }
+
+  get selector(): BigInt {
+    return this._call.inputValues[6].value.toBigInt();
+  }
+}
+
+export class ArbFromETHWith1InchAndUniV2Call__Outputs {
+  _call: ArbFromETHWith1InchAndUniV2Call;
+
+  constructor(call: ArbFromETHWith1InchAndUniV2Call) {
+    this._call = call;
+  }
+
+  get actualAmountOut(): BigInt {
+    return this._call.outputValues[0].value.toBigInt();
+  }
+}
+
+export class ArbFromETHWith1InchAndUniV2CallDescStruct extends ethereum.Tuple {
+  get srcToken(): Address {
+    return this[0].toAddress();
+  }
+
+  get dstToken(): Address {
+    return this[1].toAddress();
+  }
+
+  get srcReceiver(): Address {
+    return this[2].toAddress();
+  }
+
+  get dstReceiver(): Address {
+    return this[3].toAddress();
+  }
+
+  get amount(): BigInt {
+    return this[4].toBigInt();
+  }
+
+  get minReturnAmount(): BigInt {
+    return this[5].toBigInt();
+  }
+
+  get flags(): BigInt {
+    return this[6].toBigInt();
+  }
+}
+
+export class ArbFromETHWith1InchAndUniV3Call extends ethereum.Call {
+  get inputs(): ArbFromETHWith1InchAndUniV3Call__Inputs {
+    return new ArbFromETHWith1InchAndUniV3Call__Inputs(this);
+  }
+
+  get outputs(): ArbFromETHWith1InchAndUniV3Call__Outputs {
+    return new ArbFromETHWith1InchAndUniV3Call__Outputs(this);
+  }
+}
+
+export class ArbFromETHWith1InchAndUniV3Call__Inputs {
+  _call: ArbFromETHWith1InchAndUniV3Call;
+
+  constructor(call: ArbFromETHWith1InchAndUniV3Call) {
+    this._call = call;
+  }
+
+  get oneInch(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get executor(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get desc(): ArbFromETHWith1InchAndUniV3CallDescStruct {
+    return changetype<ArbFromETHWith1InchAndUniV3CallDescStruct>(
+      this._call.inputValues[2].value.toTuple()
+    );
+  }
+
+  get uniV3(): Address {
+    return this._call.inputValues[3].value.toAddress();
+  }
+
+  get params(): ArbFromETHWith1InchAndUniV3CallParamsStruct {
+    return changetype<ArbFromETHWith1InchAndUniV3CallParamsStruct>(
+      this._call.inputValues[4].value.toTuple()
+    );
+  }
+
+  get deadline(): BigInt {
+    return this._call.inputValues[5].value.toBigInt();
+  }
+
+  get selector(): BigInt {
+    return this._call.inputValues[6].value.toBigInt();
+  }
+}
+
+export class ArbFromETHWith1InchAndUniV3Call__Outputs {
+  _call: ArbFromETHWith1InchAndUniV3Call;
+
+  constructor(call: ArbFromETHWith1InchAndUniV3Call) {
+    this._call = call;
+  }
+
+  get actualAmountOut(): BigInt {
+    return this._call.outputValues[0].value.toBigInt();
+  }
+}
+
+export class ArbFromETHWith1InchAndUniV3CallDescStruct extends ethereum.Tuple {
+  get srcToken(): Address {
+    return this[0].toAddress();
+  }
+
+  get dstToken(): Address {
+    return this[1].toAddress();
+  }
+
+  get srcReceiver(): Address {
+    return this[2].toAddress();
+  }
+
+  get dstReceiver(): Address {
+    return this[3].toAddress();
+  }
+
+  get amount(): BigInt {
+    return this[4].toBigInt();
+  }
+
+  get minReturnAmount(): BigInt {
+    return this[5].toBigInt();
+  }
+
+  get flags(): BigInt {
+    return this[6].toBigInt();
+  }
+}
+
+export class ArbFromETHWith1InchAndUniV3CallParamsStruct extends ethereum.Tuple {
+  get tokenIn(): Address {
+    return this[0].toAddress();
+  }
+
+  get tokenOut(): Address {
+    return this[1].toAddress();
+  }
+
+  get fee(): i32 {
+    return this[2].toI32();
+  }
+
+  get recipient(): Address {
+    return this[3].toAddress();
+  }
+
+  get deadline(): BigInt {
+    return this[4].toBigInt();
+  }
+
+  get amountIn(): BigInt {
+    return this[5].toBigInt();
+  }
+
+  get amountOutMinimum(): BigInt {
+    return this[6].toBigInt();
+  }
+
+  get sqrtPriceLimitX96(): BigInt {
+    return this[7].toBigInt();
+  }
+}
+
+export class ArbFromETHWith1InchAndVaultCall extends ethereum.Call {
+  get inputs(): ArbFromETHWith1InchAndVaultCall__Inputs {
+    return new ArbFromETHWith1InchAndVaultCall__Inputs(this);
+  }
+
+  get outputs(): ArbFromETHWith1InchAndVaultCall__Outputs {
+    return new ArbFromETHWith1InchAndVaultCall__Outputs(this);
+  }
+}
+
+export class ArbFromETHWith1InchAndVaultCall__Inputs {
+  _call: ArbFromETHWith1InchAndVaultCall;
+
+  constructor(call: ArbFromETHWith1InchAndVaultCall) {
+    this._call = call;
+  }
+
+  get oneInch(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get executor(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get desc(): ArbFromETHWith1InchAndVaultCallDescStruct {
+    return changetype<ArbFromETHWith1InchAndVaultCallDescStruct>(
+      this._call.inputValues[2].value.toTuple()
+    );
+  }
+
+  get data(): Bytes {
+    return this._call.inputValues[3].value.toBytes();
+  }
+
+  get vault(): Address {
+    return this._call.inputValues[4].value.toAddress();
+  }
+
+  get swaps(): Array<ArbFromETHWith1InchAndVaultCallSwapsStruct> {
+    return this._call.inputValues[5].value.toTupleArray<
+      ArbFromETHWith1InchAndVaultCallSwapsStruct
+    >();
+  }
+
+  get assets(): Array<Address> {
+    return this._call.inputValues[6].value.toAddressArray();
+  }
+
+  get deadline(): BigInt {
+    return this._call.inputValues[7].value.toBigInt();
+  }
+
+  get selector(): BigInt {
+    return this._call.inputValues[8].value.toBigInt();
+  }
+}
+
+export class ArbFromETHWith1InchAndVaultCall__Outputs {
+  _call: ArbFromETHWith1InchAndVaultCall;
+
+  constructor(call: ArbFromETHWith1InchAndVaultCall) {
+    this._call = call;
+  }
+
+  get actualAmountOut(): BigInt {
+    return this._call.outputValues[0].value.toBigInt();
+  }
+}
+
+export class ArbFromETHWith1InchAndVaultCallDescStruct extends ethereum.Tuple {
+  get srcToken(): Address {
+    return this[0].toAddress();
+  }
+
+  get dstToken(): Address {
+    return this[1].toAddress();
+  }
+
+  get srcReceiver(): Address {
+    return this[2].toAddress();
+  }
+
+  get dstReceiver(): Address {
+    return this[3].toAddress();
+  }
+
+  get amount(): BigInt {
+    return this[4].toBigInt();
+  }
+
+  get minReturnAmount(): BigInt {
+    return this[5].toBigInt();
+  }
+
+  get flags(): BigInt {
+    return this[6].toBigInt();
+  }
+}
+
+export class ArbFromETHWith1InchAndVaultCallSwapsStruct extends ethereum.Tuple {
+  get poolId(): Bytes {
+    return this[0].toBytes();
+  }
+
+  get assetInIndex(): BigInt {
+    return this[1].toBigInt();
+  }
+
+  get assetOutIndex(): BigInt {
+    return this[2].toBigInt();
+  }
+
+  get amount(): BigInt {
+    return this[3].toBigInt();
+  }
+
+  get userData(): Bytes {
+    return this[4].toBytes();
+  }
+}
+
+export class ArbFromETHWithUniV3Call extends ethereum.Call {
+  get inputs(): ArbFromETHWithUniV3Call__Inputs {
+    return new ArbFromETHWithUniV3Call__Inputs(this);
+  }
+
+  get outputs(): ArbFromETHWithUniV3Call__Outputs {
+    return new ArbFromETHWithUniV3Call__Outputs(this);
+  }
+}
+
+export class ArbFromETHWithUniV3Call__Inputs {
+  _call: ArbFromETHWithUniV3Call;
+
+  constructor(call: ArbFromETHWithUniV3Call) {
+    this._call = call;
+  }
+
+  get uniV3Buy(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get paramsBuy(): ArbFromETHWithUniV3CallParamsBuyStruct {
+    return changetype<ArbFromETHWithUniV3CallParamsBuyStruct>(
+      this._call.inputValues[1].value.toTuple()
+    );
+  }
+
+  get uniV3Sell(): Address {
+    return this._call.inputValues[2].value.toAddress();
+  }
+
+  get paramsSell(): ArbFromETHWithUniV3CallParamsSellStruct {
+    return changetype<ArbFromETHWithUniV3CallParamsSellStruct>(
+      this._call.inputValues[3].value.toTuple()
+    );
+  }
+
+  get deadline(): BigInt {
+    return this._call.inputValues[4].value.toBigInt();
+  }
+}
+
+export class ArbFromETHWithUniV3Call__Outputs {
+  _call: ArbFromETHWithUniV3Call;
+
+  constructor(call: ArbFromETHWithUniV3Call) {
+    this._call = call;
+  }
+
+  get actualAmountOut(): BigInt {
+    return this._call.outputValues[0].value.toBigInt();
+  }
+}
+
+export class ArbFromETHWithUniV3CallParamsBuyStruct extends ethereum.Tuple {
+  get tokenIn(): Address {
+    return this[0].toAddress();
+  }
+
+  get tokenOut(): Address {
+    return this[1].toAddress();
+  }
+
+  get fee(): i32 {
+    return this[2].toI32();
+  }
+
+  get recipient(): Address {
+    return this[3].toAddress();
+  }
+
+  get deadline(): BigInt {
+    return this[4].toBigInt();
+  }
+
+  get amountIn(): BigInt {
+    return this[5].toBigInt();
+  }
+
+  get amountOutMinimum(): BigInt {
+    return this[6].toBigInt();
+  }
+
+  get sqrtPriceLimitX96(): BigInt {
+    return this[7].toBigInt();
+  }
+}
+
+export class ArbFromETHWithUniV3CallParamsSellStruct extends ethereum.Tuple {
+  get tokenIn(): Address {
+    return this[0].toAddress();
+  }
+
+  get tokenOut(): Address {
+    return this[1].toAddress();
+  }
+
+  get fee(): i32 {
+    return this[2].toI32();
+  }
+
+  get recipient(): Address {
+    return this[3].toAddress();
+  }
+
+  get deadline(): BigInt {
+    return this[4].toBigInt();
+  }
+
+  get amountIn(): BigInt {
+    return this[5].toBigInt();
+  }
+
+  get amountOutMinimum(): BigInt {
+    return this[6].toBigInt();
+  }
+
+  get sqrtPriceLimitX96(): BigInt {
+    return this[7].toBigInt();
+  }
+}
+
+export class ArbFromETHWithUniV3AndUniV2Call extends ethereum.Call {
+  get inputs(): ArbFromETHWithUniV3AndUniV2Call__Inputs {
+    return new ArbFromETHWithUniV3AndUniV2Call__Inputs(this);
+  }
+
+  get outputs(): ArbFromETHWithUniV3AndUniV2Call__Outputs {
+    return new ArbFromETHWithUniV3AndUniV2Call__Outputs(this);
+  }
+}
+
+export class ArbFromETHWithUniV3AndUniV2Call__Inputs {
+  _call: ArbFromETHWithUniV3AndUniV2Call;
+
+  constructor(call: ArbFromETHWithUniV3AndUniV2Call) {
+    this._call = call;
+  }
+
+  get uniV2(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get path(): Array<Address> {
+    return this._call.inputValues[1].value.toAddressArray();
+  }
+
+  get uniV3(): Address {
+    return this._call.inputValues[2].value.toAddress();
+  }
+
+  get params(): ArbFromETHWithUniV3AndUniV2CallParamsStruct {
+    return changetype<ArbFromETHWithUniV3AndUniV2CallParamsStruct>(
+      this._call.inputValues[3].value.toTuple()
+    );
+  }
+
+  get deadline(): BigInt {
+    return this._call.inputValues[4].value.toBigInt();
+  }
+
+  get selector(): BigInt {
+    return this._call.inputValues[5].value.toBigInt();
+  }
+}
+
+export class ArbFromETHWithUniV3AndUniV2Call__Outputs {
+  _call: ArbFromETHWithUniV3AndUniV2Call;
+
+  constructor(call: ArbFromETHWithUniV3AndUniV2Call) {
+    this._call = call;
+  }
+
+  get actualAmountOut(): BigInt {
+    return this._call.outputValues[0].value.toBigInt();
+  }
+}
+
+export class ArbFromETHWithUniV3AndUniV2CallParamsStruct extends ethereum.Tuple {
+  get tokenIn(): Address {
+    return this[0].toAddress();
+  }
+
+  get tokenOut(): Address {
+    return this[1].toAddress();
+  }
+
+  get fee(): i32 {
+    return this[2].toI32();
+  }
+
+  get recipient(): Address {
+    return this[3].toAddress();
+  }
+
+  get deadline(): BigInt {
+    return this[4].toBigInt();
+  }
+
+  get amountIn(): BigInt {
+    return this[5].toBigInt();
+  }
+
+  get amountOutMinimum(): BigInt {
+    return this[6].toBigInt();
+  }
+
+  get sqrtPriceLimitX96(): BigInt {
+    return this[7].toBigInt();
+  }
+}
+
+export class ArbFromETHWithUniV3AndVaultCall extends ethereum.Call {
+  get inputs(): ArbFromETHWithUniV3AndVaultCall__Inputs {
+    return new ArbFromETHWithUniV3AndVaultCall__Inputs(this);
+  }
+
+  get outputs(): ArbFromETHWithUniV3AndVaultCall__Outputs {
+    return new ArbFromETHWithUniV3AndVaultCall__Outputs(this);
+  }
+}
+
+export class ArbFromETHWithUniV3AndVaultCall__Inputs {
+  _call: ArbFromETHWithUniV3AndVaultCall;
+
+  constructor(call: ArbFromETHWithUniV3AndVaultCall) {
+    this._call = call;
+  }
+
+  get uniV3(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get params(): ArbFromETHWithUniV3AndVaultCallParamsStruct {
+    return changetype<ArbFromETHWithUniV3AndVaultCallParamsStruct>(
+      this._call.inputValues[1].value.toTuple()
+    );
+  }
+
+  get vault(): Address {
+    return this._call.inputValues[2].value.toAddress();
+  }
+
+  get swaps(): Array<ArbFromETHWithUniV3AndVaultCallSwapsStruct> {
+    return this._call.inputValues[3].value.toTupleArray<
+      ArbFromETHWithUniV3AndVaultCallSwapsStruct
+    >();
+  }
+
+  get assets(): Array<Address> {
+    return this._call.inputValues[4].value.toAddressArray();
+  }
+
+  get limits(): Array<BigInt> {
+    return this._call.inputValues[5].value.toBigIntArray();
+  }
+
+  get deadline(): BigInt {
+    return this._call.inputValues[6].value.toBigInt();
+  }
+
+  get selector(): BigInt {
+    return this._call.inputValues[7].value.toBigInt();
+  }
+}
+
+export class ArbFromETHWithUniV3AndVaultCall__Outputs {
+  _call: ArbFromETHWithUniV3AndVaultCall;
+
+  constructor(call: ArbFromETHWithUniV3AndVaultCall) {
+    this._call = call;
+  }
+
+  get actualAmountOut(): BigInt {
+    return this._call.outputValues[0].value.toBigInt();
+  }
+}
+
+export class ArbFromETHWithUniV3AndVaultCallParamsStruct extends ethereum.Tuple {
+  get tokenIn(): Address {
+    return this[0].toAddress();
+  }
+
+  get tokenOut(): Address {
+    return this[1].toAddress();
+  }
+
+  get fee(): i32 {
+    return this[2].toI32();
+  }
+
+  get recipient(): Address {
+    return this[3].toAddress();
+  }
+
+  get deadline(): BigInt {
+    return this[4].toBigInt();
+  }
+
+  get amountIn(): BigInt {
+    return this[5].toBigInt();
+  }
+
+  get amountOutMinimum(): BigInt {
+    return this[6].toBigInt();
+  }
+
+  get sqrtPriceLimitX96(): BigInt {
+    return this[7].toBigInt();
+  }
+}
+
+export class ArbFromETHWithUniV3AndVaultCallSwapsStruct extends ethereum.Tuple {
+  get poolId(): Bytes {
+    return this[0].toBytes();
+  }
+
+  get assetInIndex(): BigInt {
+    return this[1].toBigInt();
+  }
+
+  get assetOutIndex(): BigInt {
+    return this[2].toBigInt();
+  }
+
+  get amount(): BigInt {
+    return this[3].toBigInt();
+  }
+
+  get userData(): Bytes {
+    return this[4].toBytes();
+  }
+}
+
+export class ArbFromETHWithVaultCall extends ethereum.Call {
+  get inputs(): ArbFromETHWithVaultCall__Inputs {
+    return new ArbFromETHWithVaultCall__Inputs(this);
+  }
+
+  get outputs(): ArbFromETHWithVaultCall__Outputs {
+    return new ArbFromETHWithVaultCall__Outputs(this);
+  }
+}
+
+export class ArbFromETHWithVaultCall__Inputs {
+  _call: ArbFromETHWithVaultCall;
+
+  constructor(call: ArbFromETHWithVaultCall) {
+    this._call = call;
+  }
+
+  get vaultBuy(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get swapsBuy(): Array<ArbFromETHWithVaultCallSwapsBuyStruct> {
+    return this._call.inputValues[1].value.toTupleArray<
+      ArbFromETHWithVaultCallSwapsBuyStruct
+    >();
+  }
+
+  get vaultSell(): Address {
+    return this._call.inputValues[2].value.toAddress();
+  }
+
+  get swapsSell(): Array<ArbFromETHWithVaultCallSwapsSellStruct> {
+    return this._call.inputValues[3].value.toTupleArray<
+      ArbFromETHWithVaultCallSwapsSellStruct
+    >();
+  }
+
+  get assetsBuy(): Array<Address> {
+    return this._call.inputValues[4].value.toAddressArray();
+  }
+
+  get assetsSell(): Array<Address> {
+    return this._call.inputValues[5].value.toAddressArray();
+  }
+
+  get limits(): Array<BigInt> {
+    return this._call.inputValues[6].value.toBigIntArray();
+  }
+
+  get deadline(): BigInt {
+    return this._call.inputValues[7].value.toBigInt();
+  }
+}
+
+export class ArbFromETHWithVaultCall__Outputs {
+  _call: ArbFromETHWithVaultCall;
+
+  constructor(call: ArbFromETHWithVaultCall) {
+    this._call = call;
+  }
+
+  get actualAmountOut(): BigInt {
+    return this._call.outputValues[0].value.toBigInt();
+  }
+}
+
+export class ArbFromETHWithVaultCallSwapsBuyStruct extends ethereum.Tuple {
+  get poolId(): Bytes {
+    return this[0].toBytes();
+  }
+
+  get assetInIndex(): BigInt {
+    return this[1].toBigInt();
+  }
+
+  get assetOutIndex(): BigInt {
+    return this[2].toBigInt();
+  }
+
+  get amount(): BigInt {
+    return this[3].toBigInt();
+  }
+
+  get userData(): Bytes {
+    return this[4].toBytes();
+  }
+}
+
+export class ArbFromETHWithVaultCallSwapsSellStruct extends ethereum.Tuple {
+  get poolId(): Bytes {
+    return this[0].toBytes();
+  }
+
+  get assetInIndex(): BigInt {
+    return this[1].toBigInt();
+  }
+
+  get assetOutIndex(): BigInt {
+    return this[2].toBigInt();
+  }
+
+  get amount(): BigInt {
+    return this[3].toBigInt();
+  }
+
+  get userData(): Bytes {
+    return this[4].toBytes();
+  }
+}
+
+export class ArbFromETHWithVaultAndUniV2Call extends ethereum.Call {
+  get inputs(): ArbFromETHWithVaultAndUniV2Call__Inputs {
+    return new ArbFromETHWithVaultAndUniV2Call__Inputs(this);
+  }
+
+  get outputs(): ArbFromETHWithVaultAndUniV2Call__Outputs {
+    return new ArbFromETHWithVaultAndUniV2Call__Outputs(this);
+  }
+}
+
+export class ArbFromETHWithVaultAndUniV2Call__Inputs {
+  _call: ArbFromETHWithVaultAndUniV2Call;
+
+  constructor(call: ArbFromETHWithVaultAndUniV2Call) {
+    this._call = call;
+  }
+
+  get uniV2Router(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get path(): Array<Address> {
+    return this._call.inputValues[1].value.toAddressArray();
+  }
+
+  get vaultRouter(): Address {
+    return this._call.inputValues[2].value.toAddress();
+  }
+
+  get swaps(): Array<ArbFromETHWithVaultAndUniV2CallSwapsStruct> {
+    return this._call.inputValues[3].value.toTupleArray<
+      ArbFromETHWithVaultAndUniV2CallSwapsStruct
+    >();
+  }
+
+  get assets(): Array<Address> {
+    return this._call.inputValues[4].value.toAddressArray();
+  }
+
+  get limits(): Array<BigInt> {
+    return this._call.inputValues[5].value.toBigIntArray();
+  }
+
+  get deadline(): BigInt {
+    return this._call.inputValues[6].value.toBigInt();
+  }
+
+  get selector(): BigInt {
+    return this._call.inputValues[7].value.toBigInt();
+  }
+}
+
+export class ArbFromETHWithVaultAndUniV2Call__Outputs {
+  _call: ArbFromETHWithVaultAndUniV2Call;
+
+  constructor(call: ArbFromETHWithVaultAndUniV2Call) {
+    this._call = call;
+  }
+
+  get actualAmountOut(): BigInt {
+    return this._call.outputValues[0].value.toBigInt();
+  }
+}
+
+export class ArbFromETHWithVaultAndUniV2CallSwapsStruct extends ethereum.Tuple {
+  get poolId(): Bytes {
+    return this[0].toBytes();
+  }
+
+  get assetInIndex(): BigInt {
+    return this[1].toBigInt();
+  }
+
+  get assetOutIndex(): BigInt {
+    return this[2].toBigInt();
+  }
+
+  get amount(): BigInt {
+    return this[3].toBigInt();
+  }
+
+  get userData(): Bytes {
+    return this[4].toBytes();
+  }
+}
+
+export class InitializeCall extends ethereum.Call {
+  get inputs(): InitializeCall__Inputs {
+    return new InitializeCall__Inputs(this);
+  }
+
+  get outputs(): InitializeCall__Outputs {
+    return new InitializeCall__Outputs(this);
+  }
+}
+
+export class InitializeCall__Inputs {
+  _call: InitializeCall;
+
+  constructor(call: InitializeCall) {
+    this._call = call;
+  }
+}
+
+export class InitializeCall__Outputs {
+  _call: InitializeCall;
+
+  constructor(call: InitializeCall) {
+    this._call = call;
+  }
+}
+
+export class PauseCall extends ethereum.Call {
+  get inputs(): PauseCall__Inputs {
+    return new PauseCall__Inputs(this);
+  }
+
+  get outputs(): PauseCall__Outputs {
+    return new PauseCall__Outputs(this);
+  }
+}
+
+export class PauseCall__Inputs {
+  _call: PauseCall;
+
+  constructor(call: PauseCall) {
+    this._call = call;
+  }
+}
+
+export class PauseCall__Outputs {
+  _call: PauseCall;
+
+  constructor(call: PauseCall) {
+    this._call = call;
+  }
+}
+
+export class RenounceOwnershipCall extends ethereum.Call {
+  get inputs(): RenounceOwnershipCall__Inputs {
+    return new RenounceOwnershipCall__Inputs(this);
+  }
+
+  get outputs(): RenounceOwnershipCall__Outputs {
+    return new RenounceOwnershipCall__Outputs(this);
+  }
+}
+
+export class RenounceOwnershipCall__Inputs {
+  _call: RenounceOwnershipCall;
+
+  constructor(call: RenounceOwnershipCall) {
+    this._call = call;
+  }
+}
+
+export class RenounceOwnershipCall__Outputs {
+  _call: RenounceOwnershipCall;
+
+  constructor(call: RenounceOwnershipCall) {
+    this._call = call;
+  }
+}
+
+export class Set1InchStrategyCall extends ethereum.Call {
+  get inputs(): Set1InchStrategyCall__Inputs {
+    return new Set1InchStrategyCall__Inputs(this);
+  }
+
+  get outputs(): Set1InchStrategyCall__Outputs {
+    return new Set1InchStrategyCall__Outputs(this);
+  }
+}
+
+export class Set1InchStrategyCall__Inputs {
+  _call: Set1InchStrategyCall;
+
+  constructor(call: Set1InchStrategyCall) {
+    this._call = call;
+  }
+
+  get oneInch(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get strategy(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+}
+
+export class Set1InchStrategyCall__Outputs {
+  _call: Set1InchStrategyCall;
+
+  constructor(call: Set1InchStrategyCall) {
+    this._call = call;
+  }
+}
+
+export class SetDefault1InchStrategyCall extends ethereum.Call {
+  get inputs(): SetDefault1InchStrategyCall__Inputs {
+    return new SetDefault1InchStrategyCall__Inputs(this);
+  }
+
+  get outputs(): SetDefault1InchStrategyCall__Outputs {
+    return new SetDefault1InchStrategyCall__Outputs(this);
+  }
+}
+
+export class SetDefault1InchStrategyCall__Inputs {
+  _call: SetDefault1InchStrategyCall;
+
+  constructor(call: SetDefault1InchStrategyCall) {
+    this._call = call;
+  }
+
+  get strategy(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class SetDefault1InchStrategyCall__Outputs {
+  _call: SetDefault1InchStrategyCall;
+
+  constructor(call: SetDefault1InchStrategyCall) {
+    this._call = call;
+  }
+}
+
+export class SetDefaultUniV2StrategyCall extends ethereum.Call {
+  get inputs(): SetDefaultUniV2StrategyCall__Inputs {
+    return new SetDefaultUniV2StrategyCall__Inputs(this);
+  }
+
+  get outputs(): SetDefaultUniV2StrategyCall__Outputs {
+    return new SetDefaultUniV2StrategyCall__Outputs(this);
+  }
+}
+
+export class SetDefaultUniV2StrategyCall__Inputs {
+  _call: SetDefaultUniV2StrategyCall;
+
+  constructor(call: SetDefaultUniV2StrategyCall) {
+    this._call = call;
+  }
+
+  get strategy(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class SetDefaultUniV2StrategyCall__Outputs {
+  _call: SetDefaultUniV2StrategyCall;
+
+  constructor(call: SetDefaultUniV2StrategyCall) {
+    this._call = call;
+  }
+}
+
+export class SetDefaultUniV3StrategyCall extends ethereum.Call {
+  get inputs(): SetDefaultUniV3StrategyCall__Inputs {
+    return new SetDefaultUniV3StrategyCall__Inputs(this);
+  }
+
+  get outputs(): SetDefaultUniV3StrategyCall__Outputs {
+    return new SetDefaultUniV3StrategyCall__Outputs(this);
+  }
+}
+
+export class SetDefaultUniV3StrategyCall__Inputs {
+  _call: SetDefaultUniV3StrategyCall;
+
+  constructor(call: SetDefaultUniV3StrategyCall) {
+    this._call = call;
+  }
+
+  get strategy(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class SetDefaultUniV3StrategyCall__Outputs {
+  _call: SetDefaultUniV3StrategyCall;
+
+  constructor(call: SetDefaultUniV3StrategyCall) {
+    this._call = call;
+  }
+}
+
+export class SetDefaultVaultStrategyCall extends ethereum.Call {
+  get inputs(): SetDefaultVaultStrategyCall__Inputs {
+    return new SetDefaultVaultStrategyCall__Inputs(this);
+  }
+
+  get outputs(): SetDefaultVaultStrategyCall__Outputs {
+    return new SetDefaultVaultStrategyCall__Outputs(this);
+  }
+}
+
+export class SetDefaultVaultStrategyCall__Inputs {
+  _call: SetDefaultVaultStrategyCall;
+
+  constructor(call: SetDefaultVaultStrategyCall) {
+    this._call = call;
+  }
+
+  get strategy(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class SetDefaultVaultStrategyCall__Outputs {
+  _call: SetDefaultVaultStrategyCall;
+
+  constructor(call: SetDefaultVaultStrategyCall) {
+    this._call = call;
+  }
+}
+
+export class SetUniV2StrategyCall extends ethereum.Call {
+  get inputs(): SetUniV2StrategyCall__Inputs {
+    return new SetUniV2StrategyCall__Inputs(this);
+  }
+
+  get outputs(): SetUniV2StrategyCall__Outputs {
+    return new SetUniV2StrategyCall__Outputs(this);
+  }
+}
+
+export class SetUniV2StrategyCall__Inputs {
+  _call: SetUniV2StrategyCall;
+
+  constructor(call: SetUniV2StrategyCall) {
+    this._call = call;
+  }
+
+  get uniV2(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get strategy(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+}
+
+export class SetUniV2StrategyCall__Outputs {
+  _call: SetUniV2StrategyCall;
+
+  constructor(call: SetUniV2StrategyCall) {
+    this._call = call;
+  }
+}
+
+export class SetUniV3StrategyCall extends ethereum.Call {
+  get inputs(): SetUniV3StrategyCall__Inputs {
+    return new SetUniV3StrategyCall__Inputs(this);
+  }
+
+  get outputs(): SetUniV3StrategyCall__Outputs {
+    return new SetUniV3StrategyCall__Outputs(this);
+  }
+}
+
+export class SetUniV3StrategyCall__Inputs {
+  _call: SetUniV3StrategyCall;
+
+  constructor(call: SetUniV3StrategyCall) {
+    this._call = call;
+  }
+
+  get uniV3(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get strategy(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+}
+
+export class SetUniV3StrategyCall__Outputs {
+  _call: SetUniV3StrategyCall;
+
+  constructor(call: SetUniV3StrategyCall) {
+    this._call = call;
+  }
+}
+
+export class SetVaultStrategyCall extends ethereum.Call {
+  get inputs(): SetVaultStrategyCall__Inputs {
+    return new SetVaultStrategyCall__Inputs(this);
+  }
+
+  get outputs(): SetVaultStrategyCall__Outputs {
+    return new SetVaultStrategyCall__Outputs(this);
+  }
+}
+
+export class SetVaultStrategyCall__Inputs {
+  _call: SetVaultStrategyCall;
+
+  constructor(call: SetVaultStrategyCall) {
+    this._call = call;
+  }
+
+  get vault(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get strategy(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+}
+
+export class SetVaultStrategyCall__Outputs {
+  _call: SetVaultStrategyCall;
+
+  constructor(call: SetVaultStrategyCall) {
+    this._call = call;
+  }
+}
+
+export class SetupCall extends ethereum.Call {
+  get inputs(): SetupCall__Inputs {
+    return new SetupCall__Inputs(this);
+  }
+
+  get outputs(): SetupCall__Outputs {
+    return new SetupCall__Outputs(this);
+  }
+}
+
+export class SetupCall__Inputs {
+  _call: SetupCall;
+
+  constructor(call: SetupCall) {
+    this._call = call;
+  }
+
+  get uniV2Strategy(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get vaultStrategy(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get uniV3Strategy(): Address {
+    return this._call.inputValues[2].value.toAddress();
+  }
+
+  get oneInchStrategy(): Address {
+    return this._call.inputValues[3].value.toAddress();
+  }
+}
+
+export class SetupCall__Outputs {
+  _call: SetupCall;
+
+  constructor(call: SetupCall) {
+    this._call = call;
+  }
+}
+
+export class TransferOwnershipCall extends ethereum.Call {
+  get inputs(): TransferOwnershipCall__Inputs {
+    return new TransferOwnershipCall__Inputs(this);
+  }
+
+  get outputs(): TransferOwnershipCall__Outputs {
+    return new TransferOwnershipCall__Outputs(this);
+  }
+}
+
+export class TransferOwnershipCall__Inputs {
+  _call: TransferOwnershipCall;
+
+  constructor(call: TransferOwnershipCall) {
+    this._call = call;
+  }
+
+  get newOwner(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class TransferOwnershipCall__Outputs {
+  _call: TransferOwnershipCall;
+
+  constructor(call: TransferOwnershipCall) {
+    this._call = call;
+  }
+}
+
+export class UnpauseCall extends ethereum.Call {
+  get inputs(): UnpauseCall__Inputs {
+    return new UnpauseCall__Inputs(this);
+  }
+
+  get outputs(): UnpauseCall__Outputs {
+    return new UnpauseCall__Outputs(this);
+  }
+}
+
+export class UnpauseCall__Inputs {
+  _call: UnpauseCall;
+
+  constructor(call: UnpauseCall) {
+    this._call = call;
+  }
+}
+
+export class UnpauseCall__Outputs {
+  _call: UnpauseCall;
+
+  constructor(call: UnpauseCall) {
+    this._call = call;
+  }
+}
+
+export class WithdrawETHCall extends ethereum.Call {
+  get inputs(): WithdrawETHCall__Inputs {
+    return new WithdrawETHCall__Inputs(this);
+  }
+
+  get outputs(): WithdrawETHCall__Outputs {
+    return new WithdrawETHCall__Outputs(this);
+  }
+}
+
+export class WithdrawETHCall__Inputs {
+  _call: WithdrawETHCall;
+
+  constructor(call: WithdrawETHCall) {
+    this._call = call;
+  }
+}
+
+export class WithdrawETHCall__Outputs {
+  _call: WithdrawETHCall;
+
+  constructor(call: WithdrawETHCall) {
+    this._call = call;
+  }
+}
+
+export class WithdrawTokenCall extends ethereum.Call {
+  get inputs(): WithdrawTokenCall__Inputs {
+    return new WithdrawTokenCall__Inputs(this);
+  }
+
+  get outputs(): WithdrawTokenCall__Outputs {
+    return new WithdrawTokenCall__Outputs(this);
+  }
+}
+
+export class WithdrawTokenCall__Inputs {
+  _call: WithdrawTokenCall;
+
+  constructor(call: WithdrawTokenCall) {
+    this._call = call;
+  }
+
+  get _token(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class WithdrawTokenCall__Outputs {
+  _call: WithdrawTokenCall;
+
+  constructor(call: WithdrawTokenCall) {
     this._call = call;
   }
 }
