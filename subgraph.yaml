@@ -8,7 +8,7 @@ dataSources:
     source:
       address: "0xb04dc0b5106eb9e618c80480bb1d7d9220e89a76"
       abi: subgraph
-      startBlock: 0
+      startBlock: 98527106
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -17,6 +17,7 @@ dataSources:
         - AdminChanged
         - BeaconUpgraded
         - Upgraded
+        - Transaction
       abis:
         - name: subgraph
           file: ./abis/subgraph.json
@@ -27,4 +28,69 @@ dataSources:
           handler: handleBeaconUpgraded
         - event: Upgraded(indexed address)
           handler: handleUpgraded
+
       file: ./src/subgraph.ts
+
+  - kind: ethereum
+    name: arb-erc20
+    network: arbitrum-one
+    source:
+      address: "0x912ce59144191c1204e64559fe8253a0e49e6548"
+      abi: erc20
+      startBlock: 98527106
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: erc20
+          file: ./abis/erc20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/arb-erc20.ts
+  - kind: ethereum
+    name: eth-erc20
+    network: arbitrum-one
+    source:
+      address: "0x0000000000000000000000000000000000000000"
+      abi: erc20
+      startBlock: 98527106
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: erc20
+          file: ./abis/erc20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+
+      file: ./src/eth-erc20.ts
+  - kind: ethereum
+    name: weth-erc20
+    network: arbitrum-one
+    source:
+      address: "0x82af49447d8a07e3bd95bd0d56f35241523fbab1"
+      abi: erc20
+      startBlock: 98527106
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+        - Transaction
+      abis:
+        - name: erc20
+          file: ./abis/erc20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+
+      file: ./src/weth-erc20.ts
