@@ -1,21 +1,27 @@
 import { Transfer as TransferEvent } from "../generated/eth-erc20/erc20";
 import { Transaction, Transfer } from "../generated/schema";
 import { arbSwapContractAddr } from "./../config/index";
-import { Address, ByteArray } from "@graphprotocol/graph-ts";
+import { Address, BigInt } from "@graphprotocol/graph-ts";
 
 export function handleTransfer(event: TransferEvent): void {
-  const contractAddr = event.transaction.to as Address;
-  if (!contractAddr.equals(Address.fromString(arbSwapContractAddr))) {
-    return;
+  let transfer = Transfer.load(event.transaction.hash.toHex());
+  if (transfer) {
+    transfer.lastIndex = event.logIndex;
+    transfer.lastToken = event.address.toHex();
+    transfer.lastValue = event.params.value;
+    transfer.tradingVolume = event.params.value.plus(
+      transfer.firstValue ? transfer.firstValue : BigInt.fromI32(0)
+    );
+    transfer.save();
+  } else {
+    transfer = new Transfer(event.transaction.hash.toHex());
+    transfer.contract = event.transaction.to;
+    transfer.firstValue = event.params.value;
+    transfer.firstIndex = event.logIndex;
+    transfer.firstToken = event.address.toHex();
+    transfer.blockNumber = event.block.number;
+    transfer.blockTimestamp = event.block.timestamp;
+    transfer.transactionHash = event.transaction.hash;
+    transfer.save();
   }
-  let transfer = new Transfer(
-    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
-  );
-  transfer.value = event.params.value;
-  transfer.contract = event.transaction.to;
-  transfer.implementation = event.address.toHex();
-  transfer.blockNumber = event.block.number;
-  transfer.blockTimestamp = event.block.timestamp;
-  transfer.transactionHash = event.transaction.hash;
-  transfer.save();
 }

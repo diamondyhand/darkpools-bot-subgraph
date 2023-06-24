@@ -349,19 +349,6 @@ export class Transfer extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get implementation(): string {
-    let value = this.get("implementation");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toString();
-    }
-  }
-
-  set implementation(value: string) {
-    this.set("implementation", Value.fromString(value));
-  }
-
   get contract(): Bytes | null {
     let value = this.get("contract");
     if (!value || value.kind == ValueKind.NULL) {
@@ -379,17 +366,140 @@ export class Transfer extends Entity {
     }
   }
 
-  get value(): BigInt {
-    let value = this.get("value");
+  get firstToken(): string | null {
+    let value = this.get("firstToken");
     if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set firstToken(value: string | null) {
+    if (!value) {
+      this.unset("firstToken");
+    } else {
+      this.set("firstToken", Value.fromString(<string>value));
+    }
+  }
+
+  get firstValue(): BigInt | null {
+    let value = this.get("firstValue");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
     } else {
       return value.toBigInt();
     }
   }
 
-  set value(value: BigInt) {
-    this.set("value", Value.fromBigInt(value));
+  set firstValue(value: BigInt | null) {
+    if (!value) {
+      this.unset("firstValue");
+    } else {
+      this.set("firstValue", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get firstIndex(): BigInt | null {
+    let value = this.get("firstIndex");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set firstIndex(value: BigInt | null) {
+    if (!value) {
+      this.unset("firstIndex");
+    } else {
+      this.set("firstIndex", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get lastToken(): string | null {
+    let value = this.get("lastToken");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set lastToken(value: string | null) {
+    if (!value) {
+      this.unset("lastToken");
+    } else {
+      this.set("lastToken", Value.fromString(<string>value));
+    }
+  }
+
+  get lastValue(): BigInt | null {
+    let value = this.get("lastValue");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set lastValue(value: BigInt | null) {
+    if (!value) {
+      this.unset("lastValue");
+    } else {
+      this.set("lastValue", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get lastIndex(): BigInt | null {
+    let value = this.get("lastIndex");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set lastIndex(value: BigInt | null) {
+    if (!value) {
+      this.unset("lastIndex");
+    } else {
+      this.set("lastIndex", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get profit(): BigInt | null {
+    let value = this.get("profit");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set profit(value: BigInt | null) {
+    if (!value) {
+      this.unset("profit");
+    } else {
+      this.set("profit", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get tradingVolume(): BigInt | null {
+    let value = this.get("tradingVolume");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set tradingVolume(value: BigInt | null) {
+    if (!value) {
+      this.unset("tradingVolume");
+    } else {
+      this.set("tradingVolume", Value.fromBigInt(<BigInt>value));
+    }
   }
 
   get blockNumber(): BigInt {
