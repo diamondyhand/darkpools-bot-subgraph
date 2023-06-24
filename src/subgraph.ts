@@ -19,7 +19,6 @@ import {
   Transaction,
   Upgraded,
 } from "../generated/schema";
-import { TransferCall } from "../generated/arb-erc20/erc20";
 
 export function handleAdminChanged(event: AdminChangedEvent): void {
   let entity = new AdminChanged(

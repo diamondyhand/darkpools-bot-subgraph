@@ -28,27 +28,6 @@ dataSources:
           handler: handleBeaconUpgraded
         - event: Upgraded(indexed address)
           handler: handleUpgraded
-      # callHandlers:
-      #   - function: arbFromETHWithVaultAndUniV2(address,address[],address,(bytes32,uint256,uint256,uint256,bytes)[],address[],int256[],uint256,uint256)
-      #     handler: handleSaveTransaction9
-      #   - function: arbFromETH(address,address[],address,address[],uint256)
-      #     handler: handleSaveTransaction0
-      #   - function: arbFromETHWith1Inch(address,address,(address,address,address,address,uint256,uint256,uint256),address,address,(address,address,address,address,uint256,uint256,uint256))
-      #     handler: handleSaveTransaction1
-      #   - function: arbFromETHWith1InchAndUniV2(address,address,(address,address,address,address,uint256,uint256,uint256),address,address[],uint256,uint256)
-      #     handler: handleSaveTransaction2
-      #   - function: arbFromETHWith1InchAndUniV3(address,address,(address,address,address,address,uint256,uint256,uint256),address,(address,address,uint24,address,uint256,uint256,uint256,uint160),uint256,uint256)
-      #     handler: handleSaveTransaction3
-      #   - function: arbFromETHWith1InchAndVault(address,address,(address,address,address,address,uint256,uint256,uint256),bytes,address,(bytes32,uint256,uint256,uint256,bytes)[],address[],uint256,uint256)
-      #     handler: handleSaveTransaction4
-      #   - function: arbFromETHWithUniV3(address,(address,address,uint24,address,uint256,uint256,uint256,uint160),address,(address,address,uint24,address,uint256,uint256,uint256,uint160),uint256)
-      #     handler: handleSaveTransaction5
-      #   - function: arbFromETHWithUniV3AndUniV2(address,address[],address,(address,address,uint24,address,uint256,uint256,uint256,uint160),uint256,uint256)
-      #     handler: handleSaveTransaction6
-      #   - function: arbFromETHWithUniV3AndVault(address,(address,address,uint24,address,uint256,uint256,uint256,uint160),address,(bytes32,uint256,uint256,uint256,bytes)[],address[],int256[],uint256,uint256)
-      #     handler: handleSaveTransaction7
-      #   - function: arbFromETHWithVault(address,(bytes32,uint256,uint256,uint256,bytes)[],address,(bytes32,uint256,uint256,uint256,bytes)[],address[],address[],int256[],uint256)
-      #     handler: handleSaveTransaction8
 
       file: ./src/subgraph.ts
 
@@ -113,8 +92,5 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      # callHandlers:
-      #   - function: approve(address,uint256)
-      #     handler: handleCallTransfer
 
       file: ./src/weth-erc20.ts

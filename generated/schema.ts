@@ -362,6 +362,23 @@ export class Transfer extends Entity {
     this.set("implementation", Value.fromString(value));
   }
 
+  get contract(): Bytes | null {
+    let value = this.get("contract");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set contract(value: Bytes | null) {
+    if (!value) {
+      this.unset("contract");
+    } else {
+      this.set("contract", Value.fromBytes(<Bytes>value));
+    }
+  }
+
   get value(): BigInt {
     let value = this.get("value");
     if (!value || value.kind == ValueKind.NULL) {

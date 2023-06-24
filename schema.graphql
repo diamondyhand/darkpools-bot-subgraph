@@ -26,6 +26,7 @@ type Upgraded @entity(immutable: true) {
 type Transfer @entity(immutable: true) {
   id: ID!
   implementation: String! # address
+  contract: Bytes # address
   value: BigInt!
   blockNumber: BigInt!
   blockTimestamp: BigInt!

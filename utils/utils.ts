@@ -1,5 +1,5 @@
 import axios from "axios";
-import { api_key } from "../config/index";
+import { API_KEY } from "../config/index";
 export const TOKENS = require("../config/tokens.json") as any;
 
 /**
@@ -10,7 +10,7 @@ export const TOKENS = require("../config/tokens.json") as any;
 export async function convertPrice(tokenAddr: string): Promise<Object> {
   const tokenName = TOKENS[tokenAddr.toLowerCase()];
   const response = await axios.get(
-    `https://min-api.cryptocompare.com/data/price?fsym=${tokenName}&tsyms=USD,ETH&api_key=${api_key}`
+    `https://min-api.cryptocompare.com/data/price?fsym=${tokenName}&tsyms=USD,ETH&api_key=${API_KEY}`
   );
   return response.data;
 }
