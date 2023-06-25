@@ -28,10 +28,9 @@ type Transfer @entity(immutable: true) {
   contract: Bytes # address
   firstToken: String # address
   firstValue: BigInt
-  firstIndex: BigInt
   lastToken: String # address
   lastValue: BigInt
-  lastIndex: BigInt
+  twoTokens: String # two address
   profit: BigInt
   tradingVolume: BigInt
   blockNumber: BigInt!

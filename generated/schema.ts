@@ -400,23 +400,6 @@ export class Transfer extends Entity {
     }
   }
 
-  get firstIndex(): BigInt | null {
-    let value = this.get("firstIndex");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set firstIndex(value: BigInt | null) {
-    if (!value) {
-      this.unset("firstIndex");
-    } else {
-      this.set("firstIndex", Value.fromBigInt(<BigInt>value));
-    }
-  }
-
   get lastToken(): string | null {
     let value = this.get("lastToken");
     if (!value || value.kind == ValueKind.NULL) {
@@ -451,20 +434,20 @@ export class Transfer extends Entity {
     }
   }
 
-  get lastIndex(): BigInt | null {
-    let value = this.get("lastIndex");
+  get twoTokens(): string | null {
+    let value = this.get("twoTokens");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
-      return value.toBigInt();
+      return value.toString();
     }
   }
 
-  set lastIndex(value: BigInt | null) {
+  set twoTokens(value: string | null) {
     if (!value) {
-      this.unset("lastIndex");
+      this.unset("twoTokens");
     } else {
-      this.set("lastIndex", Value.fromBigInt(<BigInt>value));
+      this.set("twoTokens", Value.fromString(<string>value));
     }
   }
 
