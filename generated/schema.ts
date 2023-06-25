@@ -366,23 +366,6 @@ export class Transfer extends Entity {
     }
   }
 
-  get firstToken(): string | null {
-    let value = this.get("firstToken");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
-  }
-
-  set firstToken(value: string | null) {
-    if (!value) {
-      this.unset("firstToken");
-    } else {
-      this.set("firstToken", Value.fromString(<string>value));
-    }
-  }
-
   get firstValue(): BigInt | null {
     let value = this.get("firstValue");
     if (!value || value.kind == ValueKind.NULL) {
@@ -400,8 +383,8 @@ export class Transfer extends Entity {
     }
   }
 
-  get lastToken(): string | null {
-    let value = this.get("lastToken");
+  get token(): string | null {
+    let value = this.get("token");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -409,11 +392,11 @@ export class Transfer extends Entity {
     }
   }
 
-  set lastToken(value: string | null) {
+  set token(value: string | null) {
     if (!value) {
-      this.unset("lastToken");
+      this.unset("token");
     } else {
-      this.set("lastToken", Value.fromString(<string>value));
+      this.set("token", Value.fromString(<string>value));
     }
   }
 
@@ -431,23 +414,6 @@ export class Transfer extends Entity {
       this.unset("lastValue");
     } else {
       this.set("lastValue", Value.fromBigInt(<BigInt>value));
-    }
-  }
-
-  get twoTokens(): string | null {
-    let value = this.get("twoTokens");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
-  }
-
-  set twoTokens(value: string | null) {
-    if (!value) {
-      this.unset("twoTokens");
-    } else {
-      this.set("twoTokens", Value.fromString(<string>value));
     }
   }
 

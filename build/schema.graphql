@@ -26,11 +26,9 @@ type Upgraded @entity(immutable: true) {
 type Transfer @entity(immutable: true) {
   id: ID!
   contract: Bytes # address
-  firstToken: String # address
   firstValue: BigInt
-  lastToken: String # address
+  token: String # address
   lastValue: BigInt
-  twoTokens: String # two address
   profit: BigInt
   tradingVolume: BigInt
   blockNumber: BigInt!
