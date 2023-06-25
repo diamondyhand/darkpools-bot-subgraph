@@ -41,3 +41,23 @@
   }
 }
 ```
+
+> Add query Profit/Loss Query with the fields below (DB-212)
+
+- Inputs: Token Address, First, Final timestamp, Type of Transaction
+- Outputs: Profit, profit USD, profit Native
+
+```js
+{
+  transfers(
+    where: {
+        contract: "0xb04dc0b5106eb9e618c80480bb1d7d9220e89a76",
+        token: "0x912ce59144191c1204e64559fe8253a0e49e6548",
+        blockTimestamp_gt: "1286373200",
+        blockTimestamp_lt: "1786093711"
+    }
+  ) {
+    profit
+  }
+}
+```
