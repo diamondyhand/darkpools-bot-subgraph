@@ -11,11 +11,11 @@ export function handleTransfer(event: TransferEvent): void {
     let tradingVolume: BigInt | null = event.params.value.plus(
       firstValue ? firstValue : BigInt.fromI32(0)
     );
-    // let firstToken: string | null = transfer.firstToken;
-    // const twoTokens: string | null = firstToken
-    //   ? firstToken.concat("-").concat(event.address.toHexString())
-    //   : "";
-    // transfer.twoTokens = twoTokens;
+    let profit: BigInt | null = event.params.value.minus(
+      firstValue ? firstValue : BigInt.fromI32(0)
+    );
+
+    transfer.profit = profit;
     transfer.tradingVolume = tradingVolume;
     transfer.save();
   } else {
@@ -26,6 +26,7 @@ export function handleTransfer(event: TransferEvent): void {
     transfer.blockNumber = event.block.number;
     transfer.blockTimestamp = event.block.timestamp;
     transfer.transactionHash = event.transaction.hash;
+    transfer.profit = BigInt.fromI32(0);
     transfer.save();
   }
 }

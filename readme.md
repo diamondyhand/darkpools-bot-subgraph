@@ -2,7 +2,7 @@
 
 ## **Query** 📋
 
-> Add Trading Amount Query with the fields below
+> Add Trading Amount Query with the fields below (DB-211)
 
 - Inputs: First Timestamp, Final Timestamp
 - Outputs: Trading Volume USD, Trading Volume Native, Total Transactions
@@ -22,7 +22,7 @@
 }
 ```
 
-> Add Traded Tokens Query with the field below
+> Add Traded Tokens Query with the field below (DB-245)
 
 - Inputs: Token Address, First, Final timestamp
 - Outputs: Volume: (AmountOut + AmountIn), Volume USD, Volume Native
