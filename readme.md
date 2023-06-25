@@ -61,3 +61,28 @@
   }
 }
 ```
+
+> Add History Query with the field below (DB-247)
+
+- Inputs: First, Final timestamp
+- Outputs: transactionHash, blockTimestamp, blockNumber, token, profit
+
+```js
+{
+{
+  transfers(
+    where: {
+        contract: "0xb04dc0b5106eb9e618c80480bb1d7d9220e89a76",
+        blockTimestamp_gt: "1286373200",
+        blockTimestamp_lt: "1786093711"
+    }
+  ) {
+    transactionHash
+    blockTimestamp
+		blockNumber
+		token
+		profit
+  }
+}
+}
+```
