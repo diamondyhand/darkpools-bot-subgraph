@@ -9,6 +9,12 @@ export function handleTransfer(event: TransferEvent): void {
     transfer.lastIndex = event.logIndex;
     transfer.lastToken = event.address.toHex();
     transfer.lastValue = event.params.value;
+    let first: BigInt | null = transfer.firstValue;
+    let tradingVolume: BigInt | null = event.params.value.plus(
+      first ? first : BigInt.fromI32(0)
+    );
+    transfer.tradingVolume = tradingVolume;
+
     transfer.save();
   } else {
     transfer = new Transfer(event.transaction.hash.toHex());

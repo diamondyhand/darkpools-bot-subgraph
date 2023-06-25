@@ -2,9 +2,6 @@ import { Transfer as TransferEvent } from "../generated/eth-erc20/erc20";
 import { Transaction, Transfer } from "../generated/schema";
 import { arbSwapContractAddr } from "./../config/index";
 import { Address, BigInt } from "@graphprotocol/graph-ts";
-class Wrapper {
-  public constructor(public n: BigInt | null) {}
-}
 
 export function handleTransfer(event: TransferEvent): void {
   let transfer = Transfer.load(event.transaction.hash.toHex());
@@ -12,6 +9,11 @@ export function handleTransfer(event: TransferEvent): void {
     transfer.lastIndex = event.logIndex;
     transfer.lastToken = event.address.toHex();
     transfer.lastValue = event.params.value;
+    let first: BigInt | null = transfer.firstValue;
+    let tradingVolume: BigInt | null = event.params.value.plus(
+      first ? first : BigInt.fromI32(0)
+    );
+    transfer.tradingVolume = tradingVolume;
     transfer.save();
   } else {
     transfer = new Transfer(event.transaction.hash.toHex());
