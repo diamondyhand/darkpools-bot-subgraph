@@ -60,6 +60,7 @@
     }
   ) {
     profit
+    token
   }
 }
 ```
